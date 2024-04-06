@@ -8,13 +8,7 @@ This project aims to use the data from Kaggle, 'Airlines Dataset to predict a de
 
 The main objectives of this project are:
 
-1. Implement and compare different machine learning methods for predicting bond excess returns, including:
-   - Principal Component Regression (PCR)
-   - Partial Least Squares (PLS)
-   - Penalized Linear Regressions (Ridge, Lasso, Elastic Net)
-   - Regression Trees and Random Forests
-   - Neural Networks (Shallow and Deep)
-   - Potential more models 
+1. Implement and compare different machine learning methods for predicting delay chance.
 
 2. Evaluate the out-of-sample predictive performance of these methods using mean squared prediction error (MSPE) and out-of-sample R-squared (R2_oos).
 
