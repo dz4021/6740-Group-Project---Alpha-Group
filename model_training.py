@@ -1,6 +1,9 @@
+import os
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 
@@ -10,8 +13,12 @@ TRAIN_SIZE = 0.8
 VALID_SIZE = 0.1  # 10% of TRAIN_SIZE
 TEST_SIZE = 0.1   # 10% of TRAIN_SIZE
 
+# Decrease verbosity of TensorFlow
+tf.get_logger().setLevel('ERROR')
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 # Load the data
-data = pd.read_csv('/mnt/data/model_input.csv')
+data = pd.read_csv(r'model_input.csv')
 
 # Function to create dataset for LSTM
 def create_dataset(X, y, time_steps=1):
@@ -23,9 +30,13 @@ def create_dataset(X, y, time_steps=1):
     return np.array(Xs), np.array(ys)
 
 # Selecting features and target
-features = ['Sentiment', 'Daily Average Sentiment']
+features = ['Sentiment', 'Daily Average Sentiment', 'SPY']
 target_col_1 = 'Next Day Ticker Price Change Direction'
 target_col_5 = '5 Day Ticker Price Change Direction'
+
+# Standardize the data
+scaler = StandardScaler()
+data[features] = scaler.fit_transform(data[features])
 
 # Prepare input data for the model
 X, y_next_day = create_dataset(data[features], data[target_col_1], LOOK_BACK)
